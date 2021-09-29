@@ -1,0 +1,12 @@
+- name: Copy the Linux kernel source code to the remote host
+  copy:
+    src: {{ playbook_dir }}/roles/patch/files/linux-kernel
+    dest: ~/linux-kernel
+
+-name: Make Linux kernel
+    command:
+      cmd: make && make modules_install
+    args:
+      chdir: ~/linux-kernel
+    become: yes
+
