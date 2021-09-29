@@ -1,0 +1,6 @@
+- name: Patching the Linux kernel
+  hosts: localhost
+  connection: local
+
+  roles:
+    - patch

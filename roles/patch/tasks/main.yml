@@ -1,0 +1,32 @@
+- name: stat the patch file
+  stat:
+    path: "{{ role_path }}/files/changes.patch"
+  register: check_patch
+
+- debug:
+    msg: "Whoops! the patch is exists"
+  when: check_patch.stat.exists
+
+- name : Fail the patch is not exists
+  fail:
+    msg: "Whoops! the patch is not exists"
+  when: not check_patch.stat.exists
+
+- name: stat linux kernel source code directory
+  stat:
+    path: "{{ role_path }}/files/linux-kernel"
+  register: check_linux_kernel_dir
+
+- debug:
+    msg: "Whoops! the linux kernel direcotry is exists"
+  when: check_linux_kernel_dir.stat.exists
+
+- name : Fail the patch is not exists
+  fail:
+    msg: "Whoops! the linux kernel directory is not exists"
+  when: not check_linux_kernel_dir.stat.exists
+
+- name: Apply the patch to linux kernel directory
+  command:
+    cmd: sh "{{ role_path }}/files/apply-patch.sh"
+
